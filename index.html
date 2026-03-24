@@ -206,6 +206,52 @@
     animation: modalIn 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
     overflow: hidden;
     border-radius: 12px;
+    position: relative;
+  }
+
+  /* ── SWIPE INDICATORS ────────────────────────────────── */
+  .modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: rgba(13,13,13,0.32);
+    transition: color 0.25s ease, transform 0.25s ease;
+    user-select: none;
+    font-family: inherit;
+  }
+
+  .modal-nav:hover {
+    color: rgba(13,13,13,0.5);
+    transform: translateY(-50%) scale(1.12);
+  }
+
+  .modal-nav-prev { left: 6px; }
+  .modal-nav-next { right: 6px; }
+
+  .modal-nav svg {
+    width: 30px;
+    height: 30px;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .modal-nav-label {
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: currentColor;
   }
 
   @keyframes modalIn {
@@ -344,6 +390,15 @@
     <div class="modal-bar">
       <button class="modal-close" id="modalClose">✕</button>
     </div>
+
+    <button type="button" class="modal-nav modal-nav-prev" id="modalPrev" aria-label="Vorheriges Bild">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      <span class="modal-nav-label">swipen</span>
+    </button>
+    <button type="button" class="modal-nav modal-nav-next" id="modalNext" aria-label="Nächstes Bild">
+      <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+      <span class="modal-nav-label">swipen</span>
+    </button>
     <div class="modal-images">
 
       <div class="modal-panel">
@@ -458,6 +513,9 @@
   });
 
   closeBtn.addEventListener('click', closeModal);
+
+  document.getElementById('modalPrev').addEventListener('click', openPreviousPhoto);
+  document.getElementById('modalNext').addEventListener('click', openNextPhoto);
 
   backdrop.addEventListener('click', (e) => {
     if (e.target === backdrop) closeModal();
