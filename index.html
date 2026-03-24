@@ -464,6 +464,9 @@
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
+    if (!backdrop.classList.contains('active')) return;
+    if (e.key === 'ArrowRight') openNextPhoto();
+    if (e.key === 'ArrowLeft') openPreviousPhoto();
   });
 </script>
 </body>
