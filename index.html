@@ -402,27 +402,51 @@
       <div class="hover-hint">
       </div>
     `;
-    card.addEventListener('click', () => openModal(photo));
+    card.addEventListener('click', () => openModalByIndex(i));
     grid.appendChild(card);
   });
 
   // ── Modal-Logik
   const backdrop = document.getElementById('modalBackdrop');
+  const modalImages = document.querySelector('.modal-images');
   const modalOriginal = document.getElementById('modalOriginal');
   const modalFiltered = document.getElementById('modalFiltered');
   const closeBtn     = document.getElementById('modalClose');
+  let currentIndex = 0;
+  let touchStartX = null;
 
-  function openModal(photo) {
+  function openModalByIndex(index) {
+    const safeIndex = ((index % photos.length) + photos.length) % photos.length;
+    const photo = photos[safeIndex];
+    currentIndex = safeIndex;
     modalFiltered.src = photo.filtered;
     modalOriginal.src = photo.original;
     backdrop.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
 
+  function openNextPhoto() {
+    openModalByIndex(currentIndex + 1);
+  }
+
   function closeModal() {
     backdrop.classList.remove('active');
     document.body.style.overflow = '';
   }
+
+  modalImages.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+  });
+
+  modalImages.addEventListener('touchend', (e) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const swipeDistance = touchStartX - touchEndX;
+    touchStartX = null;
+    if (Math.abs(swipeDistance) > 40) {
+      openNextPhoto();
+    }
+  });
 
   closeBtn.addEventListener('click', closeModal);
 
