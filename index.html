@@ -199,7 +199,9 @@
     background: var(--white);
     border: 1px solid var(--light-grey);
     box-shadow: 0 32px 80px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.08);
-    width: min(86vw, 1100px);
+    flex: 1;
+    min-width: 0;
+    max-width: 1100px;
     max-height: 88vh;
     display: flex;
     flex-direction: column;
@@ -208,20 +210,22 @@
     border-radius: 12px;
   }
 
-  /* ── SWIPE INDICATORS ────────────────────────────────── */
+  /* ── MODAL WRAPPER (modal + nav arrows side by side) ─── */
+  .modal-wrapper {
+    display: flex;
+    align-items: center;
+    max-width: 100vw;
+  }
+
+  /* ── NAV ARROWS ──────────────────────────────────────── */
   .modal-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 20;
+    flex-shrink: 0;
     cursor: pointer;
     background: none;
     border: none;
     padding: 16px 10px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 5px;
     color: rgba(13,13,13,0.32);
     transition: color 0.25s ease, transform 0.25s ease;
     user-select: none;
@@ -230,11 +234,8 @@
 
   .modal-nav:hover {
     color: rgba(13,13,13,0.5);
-    transform: translateY(-50%) scale(1.12);
+    transform: scale(1.12);
   }
-
-  .modal-nav-prev { left: 6px; }
-  .modal-nav-next { right: 6px; }
 
   .modal-nav svg {
     width: 30px;
@@ -244,13 +245,6 @@
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
-  }
-
-  .modal-nav-label {
-    font-size: 8px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: currentColor;
   }
 
   @keyframes modalIn {
@@ -349,7 +343,10 @@
     header { padding: 48px 24px 32px; }
     .grid-section { padding: 8px 16px 60px; }
     .masonry { columns: 2 160px; column-gap: 10px; }
-    .modal { width: 96vw; max-height: 92vh; }
+    .modal-wrapper { align-items: center; }
+    .modal { max-height: 92vh; }
+    .modal-nav { padding: 12px 6px; }
+    .modal-nav svg { width: 22px; height: 22px; }
     .modal-images { grid-template-columns: 1fr; gap: 14px; padding: 14px; }
     .modal-panel img { max-height: calc(46vh - 72px); }
     footer { padding: 20px 24px; }
@@ -385,33 +382,33 @@
 
 <!-- ═══════════════════════════════════════════════════════ MODAL -->
 <div class="modal-backdrop" id="modalBackdrop">
-  <button type="button" class="modal-nav modal-nav-prev" id="modalPrev" aria-label="Vorheriges Bild">
-    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    <span class="modal-nav-label">swipen</span>
-  </button>
-  <div class="modal" id="modal">
-    <div class="modal-bar">
-      <button class="modal-close" id="modalClose">✕</button>
-    </div>
-
-    <div class="modal-images">
-
-      <div class="modal-panel">
-        <img id="modalOriginal" src="" alt="Original" />
-        <span class="modal-caption">Wirklichkeit</span>
+  <div class="modal-wrapper">
+    <button type="button" class="modal-nav modal-nav-prev" id="modalPrev" aria-label="Vorheriges Bild">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="modal" id="modal">
+      <div class="modal-bar">
+        <button class="modal-close" id="modalClose">✕</button>
       </div>
 
-      <div class="modal-panel">
-        <img id="modalFiltered" src="" alt="Gefiltert" />
-        <span class="modal-caption">Darstellung</span>
-      </div>
+      <div class="modal-images">
 
+        <div class="modal-panel">
+          <img id="modalOriginal" src="" alt="Original" />
+          <span class="modal-caption">Wirklichkeit</span>
+        </div>
+
+        <div class="modal-panel">
+          <img id="modalFiltered" src="" alt="Gefiltert" />
+          <span class="modal-caption">Darstellung</span>
+        </div>
+
+      </div>
     </div>
+    <button type="button" class="modal-nav modal-nav-next" id="modalNext" aria-label="Nächstes Bild">
+      <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+    </button>
   </div>
-  <button type="button" class="modal-nav modal-nav-next" id="modalNext" aria-label="Nächstes Bild">
-    <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
-    <span class="modal-nav-label">swipen</span>
-  </button>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════ FOOTER -->
