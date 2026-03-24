@@ -206,7 +206,6 @@
     animation: modalIn 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
     overflow: hidden;
     border-radius: 12px;
-    position: relative;
   }
 
   /* ── SWIPE INDICATORS ────────────────────────────────── */
@@ -386,19 +385,15 @@
 
 <!-- ═══════════════════════════════════════════════════════ MODAL -->
 <div class="modal-backdrop" id="modalBackdrop">
+  <button type="button" class="modal-nav modal-nav-prev" id="modalPrev" aria-label="Vorheriges Bild">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    <span class="modal-nav-label">swipen</span>
+  </button>
   <div class="modal" id="modal">
     <div class="modal-bar">
       <button class="modal-close" id="modalClose">✕</button>
     </div>
 
-    <button type="button" class="modal-nav modal-nav-prev" id="modalPrev" aria-label="Vorheriges Bild">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      <span class="modal-nav-label">swipen</span>
-    </button>
-    <button type="button" class="modal-nav modal-nav-next" id="modalNext" aria-label="Nächstes Bild">
-      <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
-      <span class="modal-nav-label">swipen</span>
-    </button>
     <div class="modal-images">
 
       <div class="modal-panel">
@@ -413,6 +408,10 @@
 
     </div>
   </div>
+  <button type="button" class="modal-nav modal-nav-next" id="modalNext" aria-label="Nächstes Bild">
+    <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+    <span class="modal-nav-label">swipen</span>
+  </button>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════ FOOTER -->
